@@ -106,12 +106,12 @@ void Test_All_Modules () {
 
 void setup() {
 
-	Sched_Init();
-
 	Serial.begin(9600);
 	Serial.println("LED TEST - Started!");
 	Test_Builtin_Led();
 	Serial.println("LED TEST - Ended!");
+
+	Sched_Init();
 	
 	Sched_AddTask(Setup_All_Modules, 0, 0);
 
