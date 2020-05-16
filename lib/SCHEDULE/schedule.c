@@ -13,7 +13,6 @@ void Config_Timer() {
     // Set the Timer Mode to CTC
     TCCR1A |= (1 << WGM12);
 
-    // Set the value that you want to count to
     OCR1A = 15999;
 
     TIMSK1 |= (1 << OCIE1A);    //Set the ISR COMPA vect

@@ -4,122 +4,105 @@ extern "C" {
    #include "hcsr04.h"
    #include "blink.h"
    #include "schedule.h"
-  // #include "hcsr04_handler.h"
-}
-
-void Setup_All_Modules() {
-
-	setupHCSR04(MODULE_1);
-	setupHCSR04(MODULE_2);
-	setupHCSR04(MODULE_3);
-	setupHCSR04(MODULE_4);
-	setupHCSR04(MODULE_5);
-	setupHCSR04(MODULE_6);
-	setupHCSR04(MODULE_7);
-	setupHCSR04(MODULE_8);
-	Serial.println("setup is done");
-
+   #include "hcsr04_handler.h"
 }
 
 void Test_All_Modules () {
 
-	double d;
+	double d, total;
+	int t = 0;
 
 	Serial.print("First module measure: ");
-
 	sendTrigger(MODULE_1);
-
 	EchoPulseWidth(&d);
-
 	Serial.println(d);
+
+	t += d;
 
 	/****/
 
 	Serial.print("Second module measure: ");
 	sendTrigger(MODULE_2);
-
 	EchoPulseWidth(&d);
-
 	Serial.println(d);
 
+	t += d;
+	
 	/****/
 
 	Serial.print("Third module measure: ");
 	sendTrigger(MODULE_3);
-
 	EchoPulseWidth(&d);
-
 	Serial.println(d);
 
+	t += d;
+	
 	/****/
 
-	Serial.print("Fourth module measure: ");
+	Serial.print("Forth module measure: ");
 	sendTrigger(MODULE_4);
-
 	EchoPulseWidth(&d);
-
 	Serial.println(d);
+
+	t += d;
 
 	/****/
 
 	Serial.print("Fifth module measure: ");
 	sendTrigger(MODULE_5);
-
 	EchoPulseWidth(&d);
-
 	Serial.println(d);
 
-	/****/
+	t += d;
 
-	Serial.print("Sixth module measure: ");
+	/*** --Not working--
+
+	Serial.print("Six module measure: ");
 	sendTrigger(MODULE_6);
-
-	EchoPulseWidth(&d);
-
-	Serial.println(d);
+	EchoPulseWidth(&d, MODULE_6);
+	Serial.println(d);*/
 
 	/****/
 
-	Serial.print("Seventh module measure: ");
+	Serial.print("Seven module measure: ");
 	sendTrigger(MODULE_7);
-
 	EchoPulseWidth(&d);
-
 	Serial.println(d);
+
+	t += d;
 
 	/****/
 
 	Serial.print("Eight module measure: ");
 	sendTrigger(MODULE_8);
-
 	EchoPulseWidth(&d);
-
 	Serial.println(d);
+
+	t += d;
 
 	/****/
 
+	total = t * 0.058;
+	Serial.print("total time in ms: ");
+	Serial.println(total);
+
 	Serial.println("*****************");
-
-	delay(2000);
-
 }
 
 void setup() {
 
 	Serial.begin(9600);
+	Sched_Init();
+
 	Serial.println("LED TEST - Started!");
-	Test_Builtin_Led();
+	Sched_AddTask(Test_Builtin_Led, 0, 0);
 	Serial.println("LED TEST - Ended!");
 
-	Sched_Init();
-	
 	Sched_AddTask(Setup_All_Modules, 0, 0);
 
-	Sched_AddTask(Test_All_Modules, 0, 2000);
-
+	Sched_AddTask(Test_All_Modules, 0, 0);
 }
 
 void loop() {
-
 	Sched_Dispatch();
 }

@@ -35,7 +35,7 @@ void sendTrigger(uint8_t trigger) {
 
 void EchoPulseWidth(double *distance) {
 
-    uint64_t start, end, temp;
+    uint64_t start, end;
 
     /* WHILE ECHO IS LOW */
     while(!(PINC & (1 << ECHO)));
@@ -46,14 +46,18 @@ void EchoPulseWidth(double *distance) {
     /* WAIT WHILE ECHO IS HIGH */
     while(PINC & (1 << ECHO)) {
 
-        end =  micros();
+        /* 23200 us is the max value of time to reach the maximum value of distance (4 meters).
+         * If temp is higher than 23200, it means there is no obstacle.
+         * Sometimes it can occur a "loss of echo" meaning the line is always HIGH for a huge period of time
+         * --LOSS OF ECHO--
+         * New trigger and reading.
 
+        end =  micros();
         temp = end - start;
 
-        /* 23200 us is the max value of time to reach the maximum value of distance (4 meters).
-         * If temp is higher than 23200 it means there is no obstacle.
-         */
-        if (temp > 23200) break;
+        if (temp > 23200) {
+             Timeout function ()
+        } */
 
     }
 
