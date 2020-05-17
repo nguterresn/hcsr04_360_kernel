@@ -9,7 +9,7 @@ typedef struct {
     int period;
     /* ticks to activate  */
     int delay;
-    /* function pointer   */
+    /* function pointer -> type (*pointer-name)(parameter); */
     void (*func)(void);
     /* activation counter */
     int exec;

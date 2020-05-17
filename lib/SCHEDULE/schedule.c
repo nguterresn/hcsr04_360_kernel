@@ -61,7 +61,7 @@ void Sched_Schedule() {
     }
 }
 
-int Sched_AddTask(void (*function)(void), int delay, int period){
+int Sched_AddTask(void (*function)(void),  int delay, int period){
 
     for(int x = 0; x < TASKS_NUMBER; x++)
         if (!Tasks[x].func) { 
@@ -86,6 +86,8 @@ void Sched_Dispatch() {
 
             /* Delete task * if one-shot */
             if(!Tasks[x].period) Tasks[x].func = 0;
+
+            //return;
         }
     }
 }

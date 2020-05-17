@@ -7,70 +7,33 @@ extern "C" {
    #include "hcsr04_handler.h"
 }
 
-void mod1 () {
-	sendTrigger(MODULE_1);
-	EchoPulseWidth(&Measures[0]);
-	Serial.println(Measures[0]);
-}
-
-void mod2 () {
-	sendTrigger(MODULE_2);
-	EchoPulseWidth(&Measures[1]);
-	Serial.println(Measures[1]);
-}
-
-void mod3 () {
-	sendTrigger(MODULE_3);
-	EchoPulseWidth(&Measures[2]);
-	Serial.println(Measures[2]);
-}
-
-void mod4 () {
-	sendTrigger(MODULE_4);
-	EchoPulseWidth(&Measures[3]);
-	Serial.println(Measures[3]);
-}
-
-void mod5 () {
-	sendTrigger(MODULE_5);
-	EchoPulseWidth(&Measures[4]);
-	Serial.println(Measures[4]);
-}
-
-void mod7 () {
-	sendTrigger(MODULE_7);
-	EchoPulseWidth(&Measures[5]);
-	Serial.println(Measures[5]);
-}
-
-void mod8 () {
-	sendTrigger(MODULE_8);
-	EchoPulseWidth(&Measures[6]);
-	Serial.println(Measures[6]);
-}
+void ShowSerialInfo();
 
 void setup() {
 
 	Serial.begin(9600);
-	Sched_Init();
-
 	Serial.println("LED TEST - Started!");
-	Sched_AddTask(Test_Builtin_Led, 0, 0);
+	Test_Builtin_Led();
 	Serial.println("LED TEST - Ended!");
 
-	Sched_AddTask(Setup_All_Modules, 0, 0);
-	
+	Setup_All_Modules();
+	Clear_Distance();
+	Sched_Init();
+
 	/** period with last func to organize priority */
-	Sched_AddTask(mod1, 100, 0); 
-	Sched_AddTask(mod2, 100, 0);
-	Sched_AddTask(mod3, 100, 0);
-	Sched_AddTask(mod4, 100, 0);
-	Sched_AddTask(mod5, 100, 0);
-	Sched_AddTask(mod7, 100, 0);
-	Sched_AddTask(mod8, 100, 0);
+	/* delay depends on the priority */
+	Sched_AddTask(mod1, 0, 0); 
+	Sched_AddTask(mod2, 35, 0);
+	Sched_AddTask(mod3, 70, 0);
+	Sched_AddTask(mod4, 105, 0);
+	Sched_AddTask(mod5, 140, 0);
+	Sched_AddTask(mod7, 175, 0);
+	Sched_AddTask(mod8, 210, 0);
+	Sched_AddTask(Distance_Handler, 250, 0);
+	Sched_AddTask(ShowSerialInfo, 251, 0);
 
 	/** sort by priority */
-	
+
 }
 
 void loop() {
@@ -157,4 +120,27 @@ void Test_All_Modules () {
 	Serial.println(total);
 
 	Serial.println("*****************");
+}
+
+void ShowSerialInfo() {
+	Serial.println("*** Values measured ***");
+	for (int i = 0; i < 8; i++)
+	{	
+		Serial.print("Position index: ["); Serial.print(i); Serial.print("] value: ( "); Serial.print(Dist.Measures[i]); Serial.println(" )");
+	}
+	Serial.println("*** Far modules ***");
+	for (int i = 0; i < 8; i++)
+	{
+		Serial.print("Position index: ["); Serial.print(i); Serial.print("] value: ( "); Serial.print(Dist.far[i]); Serial.println(" )");
+	}
+	Serial.println("*** Medium modules ***");
+	for (int i = 0; i < 8; i++)
+	{
+		Serial.print("Position index: ["); Serial.print(i); Serial.print("] value: ( "); Serial.print(Dist.medium[i]); Serial.println(" )");
+	}
+	Serial.println("*** Close modules ***");
+	for (int i = 0; i < 8; i++)
+	{
+		Serial.print("Position index: ["); Serial.print(i); Serial.print("] value: ( "); Serial.print(Dist.close[i]); Serial.println(" )");
+	}
 }
