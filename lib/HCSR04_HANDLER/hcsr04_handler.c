@@ -21,7 +21,5 @@ void Priority_Handler ( uint16_t dist1,
                         //uint16_t dist6, ** Not Working **
                         uint16_t dist7, 
                         uint16_t dist8) {
-
-
 }
 

@@ -1,5 +1,10 @@
 #include "hcsr04.h"
 
+/**
+ * Used to store the distance from sensors 
+ * */
+double Measures[8];
+
 void Setup_All_Modules ();
 void Priority_Handler ( uint16_t dist1, 
                         uint16_t dist2,
