@@ -2,7 +2,7 @@
 #include <avr/interrupt.h>
 
 /* Define the number of tasks available */
-#define TASKS_NUMBER 20 
+#define TASKS_NUMBER 20
 
 typedef struct {
     /* period in ticks    */

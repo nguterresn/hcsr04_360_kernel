@@ -17,20 +17,23 @@ void setup() {
 	Serial.println("LED TEST - Ended!");
 
 	Setup_All_Modules();
+
+	Setup_Distance();
 	Clear_Distance();
+
 	Sched_Init();
 
 	/** period with last func to organize priority */
 	/* delay depends on the priority */
 	Sched_AddTask(mod1, 0, 0); 
-	Sched_AddTask(mod2, 35, 0);
-	Sched_AddTask(mod3, 70, 0);
-	Sched_AddTask(mod4, 105, 0);
-	Sched_AddTask(mod5, 140, 0);
-	Sched_AddTask(mod7, 175, 0);
-	Sched_AddTask(mod8, 210, 0);
-	Sched_AddTask(Distance_Handler, 250, 0);
-	Sched_AddTask(ShowSerialInfo, 251, 0);
+	Sched_AddTask(mod2, 0, 0);
+	Sched_AddTask(mod3, 0, 0);
+	Sched_AddTask(mod4, 0, 0);
+	Sched_AddTask(mod5, 0, 0);
+	Sched_AddTask(mod7, 0, 0);
+	Sched_AddTask(mod8, 0, 0);
+	Sched_AddTask(Distance_Handler, 250, 1000);
+	Sched_AddTask(ShowSerialInfo, 251, 1000);
 
 	/** sort by priority */
 
@@ -129,17 +132,20 @@ void ShowSerialInfo() {
 		Serial.print("Position index: ["); Serial.print(i); Serial.print("] value: ( "); Serial.print(Dist.Measures[i]); Serial.println(" )");
 	}
 	Serial.println("*** Far modules ***");
-	for (int i = 0; i < 8; i++)
+	Serial.println(Dist.far_length);
+	for (int i = 0; i < Dist.far_length; i++)
 	{
 		Serial.print("Position index: ["); Serial.print(i); Serial.print("] value: ( "); Serial.print(Dist.far[i]); Serial.println(" )");
 	}
 	Serial.println("*** Medium modules ***");
-	for (int i = 0; i < 8; i++)
+	Serial.println(Dist.medium_length);
+	for (int i = 0; i < Dist.medium_length; i++)
 	{
 		Serial.print("Position index: ["); Serial.print(i); Serial.print("] value: ( "); Serial.print(Dist.medium[i]); Serial.println(" )");
 	}
 	Serial.println("*** Close modules ***");
-	for (int i = 0; i < 8; i++)
+	Serial.println(Dist.close_length);
+	for (int i = 0; i < Dist.close_length; i++)
 	{
 		Serial.print("Position index: ["); Serial.print(i); Serial.print("] value: ( "); Serial.print(Dist.close[i]); Serial.println(" )");
 	}

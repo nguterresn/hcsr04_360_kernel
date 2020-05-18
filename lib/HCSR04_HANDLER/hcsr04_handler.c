@@ -13,6 +13,111 @@ void Setup_All_Modules() {
 
 }
 
+void Setup_Distance() {
+	Dist.far_length = 8; Dist.medium_length = 8; Dist.close_length = 8;
+}
+
+void Clear_Distance () {
+	for (int i = 0; i < Dist.close_length; i++)
+		Dist.close[i] = -1;
+	for (int i = 0; i < Dist.medium_length; i++)
+		Dist.medium[i] = -1;
+	for (int i = 0; i < Dist.far_length; i++)
+		Dist.far[i] = -1;
+}
+
+void Distance_Handler () {
+
+	int index, far = 0, medium = 0, close = 0;
+
+	/* Stores index depending on the values measured */
+	for (int i = 0; i < NUMBER_MODULES; i++)
+	{
+		/* FAR */
+		if (Dist.Measures[i] > FAR) {
+			index = FirstIndexAvailable(Dist.far);
+			Dist.far[index] = i;
+			far++;
+
+		/* MEDIUM */
+		} else if ((Dist.Measures[i] <= FAR) && (Dist.Measures[i] > MEDIUM)) {
+			index = FirstIndexAvailable(Dist.medium);
+			Dist.medium[index] = i;
+			medium++;
+
+		/* CLOSE */
+		} else if ((Dist.Measures[i] <= MEDIUM) && (Dist.Measures[i] > CLOSE)) {
+			index = FirstIndexAvailable(Dist.close);
+			Dist.close[index] = i;
+			close++;
+		}
+	}
+
+	/* length of distance arrays */
+	Dist.far_length = far;
+	Dist.medium_length = medium;
+	Dist.close_length = close;
+
+	for (int i = 0; i < Dist.close_length; i++)
+	{
+		switch (Dist.close[i])
+		{
+		case 0: Sched_AddTask(mod7, 0, 0); break;
+		case 1: Sched_AddTask(mod8, 0, 0); break;
+		case 2: Sched_AddTask(mod1, 0, 0); break;
+		case 3: Sched_AddTask(mod2, 0, 0); break;
+		case 4: Sched_AddTask(mod3, 0, 0); break;
+		case 5: Sched_AddTask(mod4, 0, 0); break;
+		case 6: Sched_AddTask(mod5, 0, 0); break;
+
+		default:
+			break;
+		}
+	}
+
+	for (int i = 0; i < Dist.medium_length; i++)
+	{
+		switch (Dist.medium[i])
+		{
+		case 0: Sched_AddTask(mod7, 0, 0); break;
+		case 1: Sched_AddTask(mod8, 0, 0); break;
+		case 2: Sched_AddTask(mod1, 0, 0); break;
+		case 3: Sched_AddTask(mod2, 0, 0); break;
+		case 4: Sched_AddTask(mod3, 0, 0); break;
+		case 5: Sched_AddTask(mod4, 0, 0); break;
+		case 6: Sched_AddTask(mod5, 0, 0); break;
+
+		default:
+			break;
+		}
+	}
+
+	for (int i = 0; i < Dist.far_length; i++)
+	{
+		switch (Dist.far[i])
+		{
+		case 0: Sched_AddTask(mod7, 0, 0); break;
+		case 1: Sched_AddTask(mod8, 0, 0); break;
+		case 2: Sched_AddTask(mod1, 0, 0); break;
+		case 3: Sched_AddTask(mod2, 0, 0); break;
+		case 4: Sched_AddTask(mod3, 0, 0); break;
+		case 5: Sched_AddTask(mod4, 0, 0); break;
+		case 6: Sched_AddTask(mod5, 0, 0); break;
+
+		default:
+			break;
+		}
+	}
+}
+
+int FirstIndexAvailable (int array[]) {
+	/* If array is not defined (-1) */
+	for (int i = 0; i < NUMBER_MODULES; i++) if (array[i] == -1) return i;
+
+	/* Returns -1 if array is full */
+	return -1;
+}
+
 void mod1 () {
 	sendTrigger(MODULE_1);
 	EchoPulseWidth(&Dist.Measures[MODULE_1]);
@@ -49,44 +154,4 @@ void mod8 () {
 }
 
 
-void Clear_Distance () {
-	//reset 
-	for (int i = 0; i < NUMBER_MODULES; i++)
-	{
-		Dist.close[i] = 0;
-		Dist.medium[i] = 0;
-		Dist.far[i] = 0;
-	}
-}
-
-void Distance_Handler () {
-
-	int index;
-
-	for (int i = 0; i < NUMBER_MODULES; i++)
-	{
-
-		/* FAR */
-		if (Dist.Measures[i] > FAR) {
-			index = FirstIndexAvailable(Dist.far);
-			Dist.far[index] = 2;
-
-		/* MEDIUM */
-		} else if ((Dist.Measures[i] <= FAR) && (Dist.Measures[i] > MEDIUM)) {
-			index = FirstIndexAvailable(Dist.medium);
-			Dist.medium[index] = 3;
-
-		/* CLOSE */
-		} else if ((Dist.Measures[i] <= MEDIUM) && (Dist.Measures[i] > CLOSE)) {
-			index = FirstIndexAvailable(Dist.close);
-			Dist.close[index] = 4;
-		}
-	}
-	
-}
-
-int FirstIndexAvailable (int array[]) {
-	for (int i = 0; i < NUMBER_MODULES; i++) if (!array[i]) return i;
-	return -1;
-}
 

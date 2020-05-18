@@ -87,7 +87,7 @@ void Sched_Dispatch() {
             /* Delete task * if one-shot */
             if(!Tasks[x].period) Tasks[x].func = 0;
 
-            //return;
+            return;
         }
     }
 }
