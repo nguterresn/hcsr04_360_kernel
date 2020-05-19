@@ -30,6 +30,8 @@ void Distance_Handler () {
 
 	int index, far = 0, medium = 0, close = 0;
 
+	Clear_Distance();
+
 	/* Stores index depending on the values measured */
 	for (int i = 0; i < NUMBER_MODULES; i++)
 	{

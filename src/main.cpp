@@ -8,34 +8,30 @@ extern "C" {
 }
 
 void ShowSerialInfo();
+int Test_All_Modules();
 
 void setup() {
 
-	Serial.begin(9600);
-	Serial.println("LED TEST - Started!");
-	Test_Builtin_Led();
-	Serial.println("LED TEST - Ended!");
+	int delay;
 
+	Serial.begin(9600);
+
+	/* Setup Trigger pins as outputs */
 	Setup_All_Modules();
 
+	/* Initializes struct variables */
 	Setup_Distance();
-	Clear_Distance();
 
+	/* Initializes schedule */
 	Sched_Init();
 
-	/** period with last func to organize priority */
-	/* delay depends on the priority */
-	Sched_AddTask(mod1, 0, 0); 
-	Sched_AddTask(mod2, 0, 0);
-	Sched_AddTask(mod3, 0, 0);
-	Sched_AddTask(mod4, 0, 0);
-	Sched_AddTask(mod5, 0, 0);
-	Sched_AddTask(mod7, 0, 0);
-	Sched_AddTask(mod8, 0, 0);
-	Sched_AddTask(Distance_Handler, 250, 1000);
-	Sched_AddTask(ShowSerialInfo, 251, 1000);
+	/* Triggers and reads values from all sensores to measure a delay on to the next measure */
+	delay = Test_All_Modules();
+	Serial.print("Delay: "); Serial.println(delay);
 
-	/** sort by priority */
+	/** Sorts by priority of distance - FAR, MEDIUM and CLOSE */
+	Sched_AddTask(Distance_Handler, delay, 3000);
+	Sched_AddTask(ShowSerialInfo, delay, 3000);
 
 }
 
@@ -43,53 +39,42 @@ void loop() {
 	Sched_Dispatch();
 }
 
-void Test_All_Modules () {
+int Test_All_Modules () {
 
-	double d, total;
 	int t = 0;
 
-	Serial.print("First module measure: ");
 	sendTrigger(MODULE_1);
-	EchoPulseWidth(&d);
-	Serial.println(d);
+	EchoPulseWidth(&Dist.Measures[MODULE_1]);
 
-	t += d;
+	t += Dist.Measures[MODULE_1];
 
 	/****/
 
-	Serial.print("Second module measure: ");
 	sendTrigger(MODULE_2);
-	EchoPulseWidth(&d);
-	Serial.println(d);
+	EchoPulseWidth(&Dist.Measures[MODULE_2]);
 
-	t += d;
+	t += Dist.Measures[MODULE_2];
 	
 	/****/
 
-	Serial.print("Third module measure: ");
 	sendTrigger(MODULE_3);
-	EchoPulseWidth(&d);
-	Serial.println(d);
+	EchoPulseWidth(&Dist.Measures[MODULE_3]);
 
-	t += d;
+	t += Dist.Measures[MODULE_3];
 	
 	/****/
 
-	Serial.print("Forth module measure: ");
 	sendTrigger(MODULE_4);
-	EchoPulseWidth(&d);
-	Serial.println(d);
+	EchoPulseWidth(&Dist.Measures[MODULE_4]);
 
-	t += d;
+	t += Dist.Measures[MODULE_4];
 
 	/****/
 
-	Serial.print("Fifth module measure: ");
 	sendTrigger(MODULE_5);
-	EchoPulseWidth(&d);
-	Serial.println(d);
+	EchoPulseWidth(&Dist.Measures[MODULE_5]);
 
-	t += d;
+	t += Dist.Measures[MODULE_5];
 
 	/*** --Not working--
 
@@ -100,29 +85,21 @@ void Test_All_Modules () {
 
 	/****/
 
-	Serial.print("Seven module measure: ");
 	sendTrigger(MODULE_7);
-	EchoPulseWidth(&d);
-	Serial.println(d);
+	EchoPulseWidth(&Dist.Measures[MODULE_7]);
 
-	t += d;
+	t += Dist.Measures[MODULE_7];
 
 	/****/
 
-	Serial.print("Eight module measure: ");
 	sendTrigger(MODULE_8);
-	EchoPulseWidth(&d);
-	Serial.println(d);
+	EchoPulseWidth(&Dist.Measures[MODULE_8]);
 
-	t += d;
+	t += Dist.Measures[MODULE_8];
 
 	/****/
 
-	total = t * 0.058;
-	Serial.print("total time in ms: ");
-	Serial.println(total);
-
-	Serial.println("*****************");
+	return (t * 0.058);
 }
 
 void ShowSerialInfo() {

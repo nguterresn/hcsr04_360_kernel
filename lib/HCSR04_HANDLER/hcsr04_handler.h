@@ -1,7 +1,5 @@
 #include "hcsr04.h"
 
-#define NELEMS(x)  (sizeof(x) / sizeof((x)[0]))
-
 #define NUMBER_MODULES 8
 
 /* thresholds to split values into priority read */
