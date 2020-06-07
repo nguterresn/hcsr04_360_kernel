@@ -1,4 +1,5 @@
 #include "hcsr04.h"
+#include <Arduino.h>
 
 #define NUMBER_MODULES 8
 
@@ -19,6 +20,12 @@ typedef struct {
     int far_length;
     double Measures[NUMBER_MODULES];
 } Distance;
+
+typedef struct {
+    double Measures[NUMBER_MODULES];
+} Time_s;
+
+Time_s Time;
 
 Distance Dist;
 

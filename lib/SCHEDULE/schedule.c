@@ -12,13 +12,9 @@ void Config_Timer() {
 
     // Set the Timer Mode to CTC
     TCCR1A |= (1 << WGM12);
-
     OCR1A = 15999;
-
     TIMSK1 |= (1 << OCIE1A);    //Set the ISR COMPA vect
-
     sei();         //enable interrupts
-
     // n = 1
     TCCR1B |= (1 << CS10);
 

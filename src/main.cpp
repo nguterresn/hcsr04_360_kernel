@@ -30,8 +30,8 @@ void setup() {
 	Serial.print("Delay: "); Serial.println(delay);
 
 	/** Sorts by priority of distance - FAR, MEDIUM and CLOSE */
-	Sched_AddTask(Distance_Handler, delay, 3000);
-	Sched_AddTask(ShowSerialInfo, delay, 3000);
+	Sched_AddTask(Distance_Handler, 0, 5000);
+	Sched_AddTask(ShowSerialInfo, 0, 5000);
 
 }
 
