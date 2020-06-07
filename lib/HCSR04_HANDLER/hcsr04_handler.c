@@ -17,21 +17,22 @@ void Setup_Distance() {
 	Dist.far_length = 8; Dist.medium_length = 8; Dist.close_length = 8;
 }
 
-void Clear_Distance () {
+void Clear () {
 	for (int i = 0; i < Dist.close_length; i++)
 		Dist.close[i] = -1;
 	for (int i = 0; i < Dist.medium_length; i++)
 		Dist.medium[i] = -1;
 	for (int i = 0; i < Dist.far_length; i++)
 		Dist.far[i] = -1;
+
+	Time.Global = 0;
 }
 
 void Distance_Handler () {
 	
-
 	int index, far = 0, medium = 0, close = 0;
 
-	Clear_Distance();
+	Clear();
 
 	/* Stores index depending on the values measured */
 	for (int i = 0; i < NUMBER_MODULES; i++)
@@ -129,6 +130,8 @@ void mod1 () {
 
 	double end_t = millis();
 	Time.Measures[MODULE_1] = end_t - start_t;
+
+	Time.Global += Time.Measures[MODULE_1];
 }
 
 void mod2 () {
@@ -139,6 +142,8 @@ void mod2 () {
 
 	double end_t = millis();
 	Time.Measures[MODULE_2] = end_t - start_t;
+
+	Time.Global += Time.Measures[MODULE_2];
 }
 
 void mod3 () {
@@ -149,6 +154,8 @@ void mod3 () {
 
 	double end_t = millis();
 	Time.Measures[MODULE_3] = end_t - start_t;
+
+	Time.Global += Time.Measures[MODULE_3];
 }
 
 void mod4 () {
@@ -159,6 +166,8 @@ void mod4 () {
 
 	double end_t = millis();
 	Time.Measures[MODULE_4] = end_t - start_t;
+
+	Time.Global += Time.Measures[MODULE_4];
 }
 
 void mod5 () {
@@ -169,6 +178,8 @@ void mod5 () {
 
 	double end_t = millis();
 	Time.Measures[MODULE_5] = end_t - start_t;
+
+	Time.Global += Time.Measures[MODULE_5];
 }
 
 /* Modulo 6 nao está funcional */
@@ -181,6 +192,8 @@ void mod7 () {
 
 	double end_t = millis();
 	Time.Measures[MODULE_7] = end_t - start_t;
+
+	Time.Global += Time.Measures[MODULE_7];
 }
 
 void mod8 () {
@@ -188,9 +201,11 @@ void mod8 () {
 
 	sendTrigger(MODULE_8);
 	EchoPulseWidth(&Dist.Measures[MODULE_8]);
-	
+
 	double end_t = millis();
 	Time.Measures[MODULE_8] = end_t - start_t;
+
+	Time.Global += Time.Measures[MODULE_8];
 }
 
 
