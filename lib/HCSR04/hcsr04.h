@@ -20,4 +20,4 @@
 
 void setupHCSR04(uint8_t trigger);
 void sendTrigger(uint8_t trigger);
-void EchoPulseWidth(double *distance);
+void EchoPulseWidth(double *distance, double *time);

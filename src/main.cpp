@@ -120,9 +120,10 @@ void ShowSerialInfo() {
 		Serial.print("Position index: ["); Serial.print(i); Serial.print("] value: ( "); Serial.print(Dist.close[i]); Serial.println(" )");
 	}
 	Serial.println("*** Time by measure ***");
+	Serial.print("Period Time: "); Serial.println(Time.Global);
 	for (int i = 0; i < 8; i++)
 	{
 		Serial.print("Position index: ["); Serial.print(i); Serial.print("] Time: ( "); Serial.print(Time.Measures[i]); Serial.println(" )");
 	}
-
+	Time.Global = 0;
 }

@@ -23,7 +23,7 @@ typedef struct {
 
 typedef struct {
     double Measures[NUMBER_MODULES];
-    double Global;
+    uint32_t Global;
 } Time_s;
 
 Time_s Time;

@@ -33,7 +33,7 @@ void sendTrigger(uint8_t trigger) {
 
 }
 
-void EchoPulseWidth(double *distance) {
+void EchoPulseWidth(double *distance, double *time) {
 
     uint64_t start, end;
 
@@ -63,6 +63,8 @@ void EchoPulseWidth(double *distance) {
 
     /* END MEASURE TIME */
     end = micros();
+
+    *time = end - start;
 
     *distance = (end - start) / 58;
 
