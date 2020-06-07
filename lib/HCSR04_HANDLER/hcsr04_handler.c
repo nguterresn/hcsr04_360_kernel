@@ -122,62 +122,74 @@ int FirstIndexAvailable (int array[]) {
 }
 
 void mod1 () {
-	double start_t = micros();
+	double start_t = millis();
+
 	sendTrigger(MODULE_1);
 	EchoPulseWidth(&Dist.Measures[MODULE_1]);
-	double end_t = micros();
+
+	double end_t = millis();
 	Time.Measures[MODULE_1] = end_t - start_t;
 }
 
 void mod2 () {
-	double start_t = micros();
+	double start_t = millis();
+
 	sendTrigger(MODULE_2);
 	EchoPulseWidth(&Dist.Measures[MODULE_2]);
-	double end_t = micros();
+
+	double end_t = millis();
 	Time.Measures[MODULE_2] = end_t - start_t;
 }
 
 void mod3 () {
-	double start_t = micros();
+	double start_t = millis();
+
 	sendTrigger(MODULE_3);
 	EchoPulseWidth(&Dist.Measures[MODULE_3]);
-	double end_t = micros();
+
+	double end_t = millis();
 	Time.Measures[MODULE_3] = end_t - start_t;
 }
 
 void mod4 () {
-	double start_t = micros();
+	double start_t = millis();
+
 	sendTrigger(MODULE_4);
 	EchoPulseWidth(&Dist.Measures[MODULE_4]);
-	double end_t = micros();
+
+	double end_t = millis();
 	Time.Measures[MODULE_4] = end_t - start_t;
 }
 
 void mod5 () {
-	double start_t = micros();
+	double start_t = millis();
+
 	sendTrigger(MODULE_5);
 	EchoPulseWidth(&Dist.Measures[MODULE_5]);
-	double end_t = micros();
+
+	double end_t = millis();
 	Time.Measures[MODULE_5] = end_t - start_t;
 }
 
 /* Modulo 6 nao está funcional */
 
 void mod7 () {
-	double start_t = micros();
+	double start_t = millis();
 
 	sendTrigger(MODULE_7);
 	EchoPulseWidth(&Dist.Measures[MODULE_7]);
 
-	double end_t = micros();
+	double end_t = millis();
 	Time.Measures[MODULE_7] = end_t - start_t;
 }
 
 void mod8 () {
-	double start_t = micros();
+	double start_t = millis();
+
 	sendTrigger(MODULE_8);
 	EchoPulseWidth(&Dist.Measures[MODULE_8]);
-	double end_t = micros();
+	
+	double end_t = millis();
 	Time.Measures[MODULE_8] = end_t - start_t;
 }
 
