@@ -30,8 +30,8 @@ void setup() {
 	Serial.print("Delay: "); Serial.println(delay);
 
 	/** Sorts by priority of distance - FAR, MEDIUM and CLOSE */
-	Sched_AddTask(Distance_Handler, 0, 5000);
-	Sched_AddTask(ShowSerialInfo, 0, 5000);
+	Sched_AddTask(Distance_Handler, 0, 10000);
+	Sched_AddTask(ShowSerialInfo, 0, 10000);
 
 }
 
@@ -43,36 +43,31 @@ int Test_All_Modules () {
 
 	int t = 0;
 
-	sendTrigger(MODULE_1);
-	EchoPulseWidth(&Dist.Measures[MODULE_1]);
+	mod1();
 
 	t += Dist.Measures[MODULE_1];
 
 	/****/
 
-	sendTrigger(MODULE_2);
-	EchoPulseWidth(&Dist.Measures[MODULE_2]);
+	mod2();
 
 	t += Dist.Measures[MODULE_2];
 	
 	/****/
 
-	sendTrigger(MODULE_3);
-	EchoPulseWidth(&Dist.Measures[MODULE_3]);
+	mod3();
 
 	t += Dist.Measures[MODULE_3];
 	
 	/****/
 
-	sendTrigger(MODULE_4);
-	EchoPulseWidth(&Dist.Measures[MODULE_4]);
+	mod4();
 
 	t += Dist.Measures[MODULE_4];
 
 	/****/
 
-	sendTrigger(MODULE_5);
-	EchoPulseWidth(&Dist.Measures[MODULE_5]);
+	mod5();
 
 	t += Dist.Measures[MODULE_5];
 
@@ -85,15 +80,13 @@ int Test_All_Modules () {
 
 	/****/
 
-	sendTrigger(MODULE_7);
-	EchoPulseWidth(&Dist.Measures[MODULE_7]);
+	mod7();
 
 	t += Dist.Measures[MODULE_7];
 
 	/****/
 
-	sendTrigger(MODULE_8);
-	EchoPulseWidth(&Dist.Measures[MODULE_8]);
+	mod8();
 
 	t += Dist.Measures[MODULE_8];
 
