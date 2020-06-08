@@ -71,7 +71,7 @@ int Sched_AddTask(void (*function)(void),  int delay, int period){
     return -1;
 }
 
-void Sched_Dispatch() { 
+int Sched_Dispatch() { 
 
     for(int x = 0; x < TASKS_NUMBER; x++) {
 

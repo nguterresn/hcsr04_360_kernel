@@ -5,6 +5,9 @@
 
 #define DEADLINE 150 //in ms
 
+#define MODE 0 
+//#define MODE 1
+
 /* thresholds to split values into priority read (in cm) */
 #define FAR 150
 #define MEDIUM 75
@@ -21,6 +24,7 @@ typedef struct {
     int far[NUMBER_MODULES];
     int far_length;
     double Measures[NUMBER_MODULES];
+    int deadline;
 } Distance;
 
 typedef struct {

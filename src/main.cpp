@@ -107,5 +107,10 @@ void ShowSerialInfo() {
 	{
 		Serial.print("Position index: ["); Serial.print(i); Serial.print("] Time: ( "); Serial.print(Time.Measures[i]); Serial.println(" )");
 	}
+
+	if (Time.Global > DEADLINE) Dist.deadline++;
+	Serial.print("*** Deadline Count *** -> ");
+	Serial.println(Dist.deadline);
+
 	Time.Global = 0;
 }

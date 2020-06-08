@@ -1,5 +1,6 @@
 #include <avr/io.h> 
 #include <avr/interrupt.h>
+#include "Arduino.h"
 
 /* Define the number of tasks available */
 #define TASKS_NUMBER 20
@@ -25,4 +26,4 @@ int Sched_AddTask(void (*function)(void), int delay, int period);
  * */
 void Sched_Schedule();
 
-void Sched_Dispatch();
+int Sched_Dispatch();
