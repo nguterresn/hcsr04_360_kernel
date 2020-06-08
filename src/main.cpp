@@ -8,11 +8,9 @@ extern "C" {
 }
 
 void ShowSerialInfo();
-int Test_All_Modules();
+void Test_All_Modules();
 
 void setup() {
-
-	int delay;
 
 	Serial.begin(9600);
 
@@ -26,11 +24,12 @@ void setup() {
 	Sched_Init();
 
 	/* Triggers and reads values from all sensores to measure a delay on to the next measure */
-	delay = Test_All_Modules();
-	Serial.print("Delay: "); Serial.println(delay);
+	Test_All_Modules();
+	Serial.print("Initial Delay: "); Serial.println(Time.Global);
 
 	/** Sorts by priority of distance - FAR, MEDIUM and CLOSE */
 	Sched_AddTask(Distance_Handler, 0, 10000);
+	//Sched_AddTask(Test_All_Modules, 0, 10000);
 	Sched_AddTask(ShowSerialInfo, 0, 10000);
 
 }
@@ -39,37 +38,26 @@ void loop() {
 	Sched_Dispatch();
 }
 
-int Test_All_Modules () {
-
-	int t = 0;
+/** Trigger sensors without task scheduling */
+void Test_All_Modules () {
 
 	mod1();
-
-	t += Dist.Measures[MODULE_1];
 
 	/****/
 
 	mod2();
-
-	t += Dist.Measures[MODULE_2];
 	
 	/****/
 
 	mod3();
-
-	t += Dist.Measures[MODULE_3];
 	
 	/****/
 
 	mod4();
 
-	t += Dist.Measures[MODULE_4];
-
 	/****/
 
 	mod5();
-
-	t += Dist.Measures[MODULE_5];
 
 	/*** --Not working--
 
@@ -82,17 +70,11 @@ int Test_All_Modules () {
 
 	mod7();
 
-	t += Dist.Measures[MODULE_7];
-
 	/****/
 
 	mod8();
 
-	t += Dist.Measures[MODULE_8];
-
 	/****/
-
-	return (t * 0.058);
 }
 
 void ShowSerialInfo() {

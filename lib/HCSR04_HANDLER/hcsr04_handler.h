@@ -3,7 +3,9 @@
 
 #define NUMBER_MODULES 8
 
-/* thresholds to split values into priority read */
+#define DEADLINE 150 //in ms
+
+/* thresholds to split values into priority read (in cm) */
 #define FAR 150
 #define MEDIUM 75
 #define CLOSE 0

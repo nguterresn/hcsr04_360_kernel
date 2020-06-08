@@ -116,14 +116,6 @@ void Distance_Handler () {
 	//Time.Global = 0.0;
 }
 
-int FirstIndexAvailable (int array[]) {
-	/* If array is not defined (-1) */
-	for (int i = 0; i < NUMBER_MODULES; i++) if (array[i] == -1) return i;
-
-	/* Returns -1 if array is full */
-	return -1;
-}
-
 void mod1 () {
 
 	sendTrigger(MODULE_1);
@@ -182,5 +174,11 @@ void mod8 () {
 	Time.Global += Time.Measures[MODULE_8];
 }
 
+int FirstIndexAvailable (int array[]) {
+	/* If array is not defined (-1) */
+	for (int i = 0; i < NUMBER_MODULES; i++) if (array[i] == -1) return i;
 
+	/* Returns -1 if array is full */
+	return -1;
+}
 
